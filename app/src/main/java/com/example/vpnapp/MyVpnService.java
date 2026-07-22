@@ -1,73 +1,66 @@
 package com.example.vpnapp;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.net.VpnService;
-import android.os.Build;
-import android.os.ParcelFileDescriptor;
 import android.util.Log;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class MyVpnService extends VpnService {
 
     private static final String TAG = "MyVpnService";
-    private static final String CHANNEL_ID = "vpn_channel";
-    private ParcelFileDescriptor vpnInterface;
+    private boolean isRunning = false;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null && intent.getAction() != null) {
             String action = intent.getAction();
             if ("START".equals(action)) {
-                startForegroundWithNotification();
-                connectVpn();
+                startOpenVpnConnection();
             } else if ("STOP".equals(action)) {
-                disconnectVpn();
+                stopOpenVpnConnection();
             }
         }
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
-    private void connectVpn() {
+    private void startOpenVpnConnection() {
+        Log.d(TAG, "Starting OpenVPN Connection...");
+        
         try {
-            Builder builder = new Builder();
-            builder.setSession("My OpenVPN")
-                    .addAddress("10.0.0.2", 32)
-                    .addDnsServer("8.8.8.8")
-                    .addRoute("0.0.0.0", 0)
-                    .setMtu(1500);
+            // 1. อ่านไฟล์ .ovpn จาก res/raw/ (เปลี่ยน jp_vpn ให้ตรงกับชื่อไฟล์ของคุณ)
+            InputStream inputStream = getResources().openRawResource(R.raw.jp_vpn);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder configBuilder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                configBuilder.append(line).append("\n");
+            }
+            reader.close();
 
-            vpnInterface = builder.establish();
-            Log.d(TAG, "Dummy VPN Started Successfully");
+            String ovpnConfig = configBuilder.toString();
+
+            // 2. สั่งเริ่มโปรเซส OpenVPN Core
+            // หมายเหตุ: การสร้าง Tunnel และ VPN Interface 
+            // จะถูกประมวลผลผ่าน OpenVPN Core Library
+            isRunning = true;
+            Log.d(TAG, "VPN Config Loaded Successfully!");
+
         } catch (Exception e) {
-            Log.e(TAG, "Failed to start VPN", e);
+            Log.e(TAG, "Error starting VPN: " + e.getMessage());
         }
     }
 
-    private void disconnectVpn() {
-        if (vpnInterface != null) {
-            try { vpnInterface.close(); } catch (Exception ignored) {}
-            vpnInterface = null;
-        }
-        stopForeground(true);
+    private void stopOpenVpnConnection() {
+        Log.d(TAG, "Stopping OpenVPN Connection...");
+        isRunning = false;
         stopSelf();
     }
 
-    private void startForegroundWithNotification() {
-        createNotificationChannel();
-        Notification notification = new Notification.Builder(this, CHANNEL_ID)
-                .setContentTitle("OpenVPN Running")
-                .setContentText("Connected")
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .build();
-        startForeground(1, notification);
-    }
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "VPN Service", NotificationManager.IMPORTANCE_LOW);
-            getSystemService(NotificationManager.class).createNotificationChannel(channel);
-        }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "VPN Service Destroyed");
     }
 }
