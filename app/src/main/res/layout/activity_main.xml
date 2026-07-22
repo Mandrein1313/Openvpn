@@ -19,21 +19,29 @@
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="24dp"
             android:src="@mipmap/ic_launcher"
             android:contentDescription="App Logo" />
 
-        <!-- หัวข้อ -->
+        <!-- หัวข้อเซิร์ฟเวอร์ -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="เซิร์ฟเวอร์"
+            android:text="เลือกเซิร์ฟเวอร์"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="#555555"
-            android:layout_marginBottom="6dp" />
+            android:layout_marginBottom="8dp" />
 
-        <!-- การ์ดเซิร์ฟเวอร์ -->
+        <!-- Spinner เลือกเซิร์ฟเวอร์ -->
+        <Spinner
+            android:id="@+id/serverSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/spinner_background" />
+
+        <!-- การ์ดแสดงข้อมูลเซิร์ฟเวอร์ปัจจุบัน -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardServer"
             android:layout_width="match_parent"
@@ -69,7 +77,7 @@
                         android:id="@+id/tvServerName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TRUE DTAC AIS NOPRO_01"
+                        android:text="Thailand Server"
                         android:textStyle="bold"
                         android:textColor="#222222"
                         android:textSize="14sp" />
@@ -78,16 +86,17 @@
                         android:id="@+id/tvServerStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ออนไลน์: 375 / จำกัด: 1000"
+                        android:text="ออนไลน์: 875 / จำกัด: 1200"
                         android:textColor="#4CAF50"
                         android:textSize="12sp"
                         android:layout_marginTop="2dp" />
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tvPercentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="37%"
+                    android:text="73%"
                     android:textColor="#4CAF50"
                     android:textStyle="bold"
                     android:background="#E8F5E9"
@@ -106,7 +115,7 @@
             android:textSize="14sp"
             android:textColor="#666666"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="16dp" />
 
         <!-- ปุ่มเชื่อมต่อ -->
         <com.google.android.material.card.MaterialCardView
