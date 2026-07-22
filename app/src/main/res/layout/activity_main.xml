@@ -20,10 +20,10 @@
             android:layout_height="140dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:src="@mipmap/ic_launcher"   <!-- เปลี่ยนเป็นรูปของคุณได้ -->
+            android:src="@mipmap/ic_launcher"
             android:contentDescription="App Logo" />
 
-        <!-- หัวข้อเซิร์ฟเวอร์ -->
+        <!-- หัวข้อ -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +41,8 @@
             android:layout_marginBottom="16dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
-            app:cardBackgroundColor="#FFFFFF">
+            app:cardBackgroundColor="#FFFFFF"
+            app:strokeWidth="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,8 +56,8 @@
                     android:layout_width="36dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="12dp"
-                    android:src="@mipmap/ic_launcher"   <!-- เปลี่ยนเป็นธงชาติ -->
-                    android:contentDescription="Flag" />
+                    android:src="@mipmap/ic_launcher"
+                    android:contentDescription="Server Flag" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -116,7 +117,8 @@
             android:focusable="true"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
-            app:cardBackgroundColor="#2196F3">
+            app:cardBackgroundColor="#2196F3"
+            app:strokeWidth="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
