@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OpenVPN App</string>
+    <string name="status_disconnected">Status: Disconnected</string>
+    <string name="status_connected">Status: Connected</string>
+    <string name="btn_connect">CONNECT VPN</string>
+    <string name="btn_disconnect">DISCONNECT</string>
+    <string name="toast_permission_denied">VPN permission denied!</string>
+</resources>
