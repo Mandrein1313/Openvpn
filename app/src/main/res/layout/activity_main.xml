@@ -4,114 +4,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="#0F0F0F">
+    android:background="#0A0A0A">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:gravity="center_horizontal">
+        android:padding="16dp">
 
         <!-- โลโก้ -->
         <ImageView
             android:id="@+id/imgLogo"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="32dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
             android:src="@mipmap/ic_launcher"
-            android:contentDescription="App Logo" />
+            android:contentDescription="Logo" />
 
         <!-- หัวข้อ -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="เลือกเซิร์ฟเวอร์"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:gravity="center"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="20dp" />
 
-        <!-- Spinner -->
-        <Spinner
-            android:id="@+id/serverSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/spinner_dark_background"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:popupBackground="#1F1F1F"
-            android:dropDownWidth="match_parent"
-            android:dropDownVerticalOffset="8dp" />
-
-        <!-- การ์ดข้อมูลเซิร์ฟเวอร์ -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardServer"
+        <!-- RecyclerView แสดงรายการเซิร์ฟเวอร์ -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/serverRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#1E1E1E"
-            app:strokeWidth="0dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/imgServerFlag"
-                    android:layout_width="40dp"
-                    android:layout_height="28dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@mipmap/ic_launcher"
-                    android:contentDescription="Flag" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tvServerName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Thailand Server"
-                        android:textStyle="bold"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tvServerStatus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="ออนไลน์: 875 / จำกัด: 1200"
-                        android:textColor="#4CAF50"
-                        android:textSize="13sp"
-                        android:layout_marginTop="4dp" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tvPercentage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="73%"
-                    android:textColor="#4CAF50"
-                    android:textStyle="bold"
-                    android:background="#1B5E20"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="6dp"
-                    android:layout_marginStart="8dp" />
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            android:paddingBottom="20dp" />
 
         <!-- สถานะ -->
         <TextView
@@ -122,6 +49,7 @@
             android:textSize="15sp"
             android:textColor="#AAAAAA"
             android:gravity="center"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="24dp" />
 
         <!-- ปุ่มเชื่อมต่อ -->
@@ -132,7 +60,7 @@
             android:clickable="true"
             android:focusable="true"
             app:cardCornerRadius="30dp"
-            app:cardElevation="6dp"
+            app:cardElevation="8dp"
             app:cardBackgroundColor="#2196F3">
 
             <TextView
