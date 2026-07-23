@@ -34,16 +34,18 @@
             android:gravity="center"
             android:layout_marginBottom="12dp" />
 
-        <!-- Spinner สีดำสวย -->
-        <Spinner
-            android:id="@+id/serverSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/spinner_dark_background"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:popupBackground="#1E1E1E" />
+        <!-- Spinner เลือกเซิร์ฟเวอร์ (ปรับให้กว้างและสวย) -->
+<Spinner
+    android:id="@+id/serverSpinner"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/spinner_dark_background"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:popupBackground="#1F1F1F"
+    android:dropDownWidth="match_parent"   <!-- ทำให้กว้างเต็มจอ -->
+    android:dropDownVerticalOffset="8dp" />
 
         <!-- การ์ดข้อมูลเซิร์ฟเวอร์ -->
         <com.google.android.material.card.MaterialCardView
