@@ -9,8 +9,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"          <!-- เพิ่มบรรทัดนี้: ไอคอนปกติ -->
-        android:roundIcon="@mipmap/ic_launcher_round" <!-- เพิ่มบรรทัดนี้: ไอคอนแบบวงกลม (ถ้ามี) -->
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="OpenVPN App"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
