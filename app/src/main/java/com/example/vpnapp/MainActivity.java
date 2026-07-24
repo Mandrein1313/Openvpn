@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isConnected = false;
     private ServerItem currentServer;
-
     private List<ServerItem> serverList = new ArrayList<>();
 
     @Override
@@ -38,9 +37,8 @@ public class MainActivity extends AppCompatActivity {
         btnConnectText = findViewById(R.id.btnConnectText);
         serverSpinner = findViewById(R.id.serverSpinner);
 
-        setupServers();
+        loadServersFromRaw();
 
-        // ใช้ Custom Adapter เพื่อแสดงธงชาติ
         CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(this, serverList);
         serverSpinner.setAdapter(adapter);
 
@@ -63,11 +61,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setupServers() {
-        serverList.add(new ServerItem("TH-BKK_Server01", "TH", "ออนไลน์: 875 / จำกัด: 1200", 73, R.drawable.flag_th, "th_vpn"));
-        serverList.add(new ServerItem("TH-BKK_Server02", "TH", "ออนไลน์: 452 / จำกัด: 800", 56, R.drawable.flag_th, "th_vpn"));
-        serverList.add(new ServerItem("JP_Server01", "JP", "ออนไลน์: 312 / จำกัด: 500", 62, R.drawable.flag_jp, "jp_vpn"));
-        serverList.add(new ServerItem("TRUE DTAC NOPRO_01", "TH", "ออนไลน์: 375 / จำกัด: 1000", 37, R.drawable.flag_th, "th_vpn"));
+    private void loadServersFromRaw() {
+        // เพิ่มไฟล์ .ovpn ที่อยู่ใน res/raw ที่นี่ (ไม่ต้องใส่ .ovpn)
+        serverList.add(new ServerItem("Thailand Server", "ออนไลน์", 73, "th_vpn"));
+        serverList.add(new ServerItem("Japan Server", "ออนไลน์", 56, "jp_vpn"));
+        // เพิ่มไฟล์อื่น ๆ ได้เลย เช่น serverList.add(new ServerItem("USA Server", "ออนไลน์", 45, "us_vpn"));
     }
 
     private void prepareAndStartVpn() {
