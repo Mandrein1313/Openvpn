@@ -1,5 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Style สำหรับทำให้ Dialog ขยายเต็มหน้าจอ -->
+    <!-- ประกาศ AppTheme ให้ AAPT รู้จัก -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- ปรับแต่งสีธีมหลักเพิ่มเติมได้ที่นี่ -->
+        <item name="colorPrimary">#2196F3</item>
+        <item name="android:statusBarColor">#0F0F0F</item>
+    </style>
+
+    <!-- Style สำหรับ Full-Screen Dialog (ที่ใช้ก่อนหน้านี้) -->
     <style name="FullScreenDialogTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">false</item>
