@@ -5,7 +5,6 @@ import android.net.VpnService;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,19 +33,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // ผูก View
         tvStatus = findViewById(R.id.tvStatus);
         btnConnectCard = findViewById(R.id.btnConnectCard);
         btnConnectText = findViewById(R.id.btnConnectText);
-        serverSpinner = findViewById(R.id.serverSpinner);   // ต้องเพิ่มใน XML ด้วย
+        serverSpinner = findViewById(R.id.serverSpinner);
 
-        // เพิ่มเซิร์ฟเวอร์
         setupServers();
 
-        // Spinner เลือกเซิร์ฟเวอร์
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, 
-            android.R.layout.simple_spinner_item, getServerNames());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // ใช้ Custom Adapter เพื่อแสดงธงชาติ
+        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(this, serverList);
         serverSpinner.setAdapter(adapter);
 
         serverSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -59,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        // ปุ่มเชื่อมต่อ
         btnConnectCard.setOnClickListener(v -> {
             if (!isConnected) {
                 prepareAndStartVpn();
@@ -70,20 +64,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupServers() {
-        serverList.add(new ServerItem("Thailand Server", "TH", "ออนไลน์: 875 / จำกัด: 1200", 73, "th_vpn"));
-        serverList.add(new ServerItem("Japan Server", "JP", "ออนไลน์: 452 / จำกัด: 800", 56, "jp_vpn"));
-        // เพิ่มเซิร์ฟเวอร์อื่น ๆ ได้ที่นี่
-    }
-
-    private List<String> getServerNames() {
-        List<String> names = new ArrayList<>();
-        for (ServerItem s : serverList) {
-            names.add(s.getName());
-        }
-        return names;
+        serverList.add(new ServerItem("TH-BKK_Server01", "TH", "ออนไลน์: 875 / จำกัด: 1200", 73, R.drawable.flag_th, "th_vpn"));
+        serverList.add(new ServerItem("TH-BKK_Server02", "TH", "ออนไลน์: 452 / จำกัด: 800", 56, R.drawable.flag_th, "th_vpn"));
+        serverList.add(new ServerItem("JP_Server01", "JP", "ออนไลน์: 312 / จำกัด: 500", 62, R.drawable.flag_jp, "jp_vpn"));
+        serverList.add(new ServerItem("TRUE DTAC NOPRO_01", "TH", "ออนไลน์: 375 / จำกัด: 1000", 37, R.drawable.flag_th, "th_vpn"));
     }
 
     private void prepareAndStartVpn() {
+        if (currentServer == null) {
+            Toast.makeText(this, "กรุณาเลือกเซิร์ฟเวอร์", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Intent intent = VpnService.prepare(this);
         if (intent != null) {
             startActivityForResult(intent, VPN_REQUEST_CODE);
@@ -103,11 +95,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startVpnService() {
-        if (currentServer == null) {
-            Toast.makeText(this, "กรุณาเลือกเซิร์ฟเวอร์", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         Intent intent = new Intent(this, MyVpnService.class);
         intent.setAction("START");
         intent.putExtra("ovpn_file", currentServer.getOvpnFileName());
