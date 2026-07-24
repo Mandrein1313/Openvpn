@@ -18,42 +18,19 @@
             android:id="@+id/imgLogo"
             android:layout_width="140dp"
             android:layout_height="140dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="40dp"
             android:src="@mipmap/ic_launcher"
             android:contentDescription="App Logo" />
 
-        <!-- หัวข้อ -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="เลือกเซิร์ฟเวอร์"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:gravity="center"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Spinner -->
-<!-- Spinner -->
-<Spinner
-    android:id="@+id/serverSpinner"
-    android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:layout_marginBottom="20dp"
-    android:background="@drawable/spinner_dark_background"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp"
-    android:popupBackground="#1F1F1F"
-    android:dropDownWidth="match_parent"
-    android:dropDownVerticalOffset="8dp" />
-
-        <!-- การ์ดข้อมูลเซิร์ฟเวอร์ -->
+        <!-- การ์ดเลือกเซิร์ฟเวอร์ (กดตรงนี้เพื่อเปิด Dialog เลือกเซิร์ฟเวอร์) -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardServer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="28dp"
+            android:clickable="true"
+            android:focusable="true"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
             app:cardBackgroundColor="#1E1E1E"
@@ -71,7 +48,7 @@
                     android:layout_width="40dp"
                     android:layout_height="28dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@drawable/flag_th"
                     android:contentDescription="Flag" />
 
                 <LinearLayout
@@ -114,7 +91,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- สถานะ -->
+        <!-- สถานะการเชื่อมต่อ -->
         <TextView
             android:id="@+id/tvStatus"
             android:layout_width="match_parent"
@@ -123,7 +100,7 @@
             android:textSize="15sp"
             android:textColor="#AAAAAA"
             android:gravity="center"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="28dp" />
 
         <!-- ปุ่มเชื่อมต่อ -->
         <com.google.android.material.card.MaterialCardView
