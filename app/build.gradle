@@ -3,41 +3,26 @@ plugins {
 }
 
 android {
-    namespace 'net.openvpn.openvpn'
-    compileSdk 35
+    namespace 'com.example.vpnapp'
+    compileSdk 34
 
     defaultConfig {
-        applicationId 'net.openvpn.openvpn'
+        applicationId 'com.example.vpnapp'
         minSdk 23
-        targetSdk 35
+        targetSdk 34
         versionCode 1
         versionName "1.0"
-
         multiDexEnabled true
-    }
-
-    buildFeatures {
-        buildConfig true
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-
-    lint {
-        abortOnError false
-    }
 }
 
 dependencies {
-
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'com.google.android.material:material:1.12.0'
-
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.multidex:multidex:2.0.1'
-
-    // รองรับโค้ด OpenVPN รุ่นเก่า
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
 }
