@@ -62,10 +62,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadServersFromRaw() {
-        // เพิ่มไฟล์ .ovpn ที่อยู่ใน res/raw ที่นี่ (ไม่ต้องใส่ .ovpn)
-        serverList.add(new ServerItem("Thailand Server", "ออนไลน์", 73, "th_vpn"));
-        serverList.add(new ServerItem("Japan Server", "ออนไลน์", 56, "jp_vpn"));
-        // เพิ่มไฟล์อื่น ๆ ได้เลย เช่น serverList.add(new ServerItem("USA Server", "ออนไลน์", 45, "us_vpn"));
+        // แก้ไขให้ส่งพารามิเตอร์ครบ 6 ตัวตาม Constructor ของ ServerItem
+        // (Name, Country, Status, Percentage, FlagResId, OvpnFileName)
+        serverList.add(new ServerItem(
+                "Thailand Server", 
+                "Thailand", 
+                "ออนไลน์", 
+                73, 
+                R.mipmap.ic_launcher, // เปลี่ยนเป็น R.drawable.ic_flag_th หรือไอคอนที่คุณมีได้
+                "th_vpn"
+        ));
+
+        serverList.add(new ServerItem(
+                "Japan Server", 
+                "Japan", 
+                "ออนไลน์", 
+                56, 
+                R.mipmap.ic_launcher, // เปลี่ยนเป็น R.drawable.ic_flag_jp หรือไอคอนที่คุณมีได้
+                "jp_vpn"
+        ));
     }
 
     private void prepareAndStartVpn() {
