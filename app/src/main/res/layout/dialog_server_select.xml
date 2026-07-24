@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F0F"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- แถบด้านบน (Header + ปุ่มปิด) -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="เลือกเซิร์ฟเวอร์"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btnCloseDialog"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:contentDescription="Close" />
+    </RelativeLayout>
+
+    <!-- รายการ ListView/RecyclerView สำหรับแสดงเซิร์ฟเวอร์เต็มหน้าจอ -->
+    <ListView
+        android:id="@+id/lvServerDialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#2D2D2D"
+        android:dividerHeight="1dp" />
+
+</LinearLayout>

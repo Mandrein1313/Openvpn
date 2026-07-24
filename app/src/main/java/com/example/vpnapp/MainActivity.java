@@ -1,12 +1,13 @@
 package com.example.vpnapp;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.VpnService;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
@@ -22,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvStatus;
     private TextView btnConnectText;
     private MaterialCardView btnConnectCard;
-    private Spinner serverSpinner;
-
-    // View บนการ์ดแสดงข้อมูลเซิร์ฟเวอร์
+    
+    // การ์ดแสดงผลเซิร์ฟเวอร์หลัก (ใช้คลิกเพื่อเปิด Dialog)
+    private MaterialCardView cardServerSelect;
     private ImageView imgServerFlag;
     private TextView tvServerName;
     private TextView tvServerStatus;
@@ -39,13 +40,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // ผูก View ทั่วไป
         tvStatus = findViewById(R.id.tvStatus);
         btnConnectCard = findViewById(R.id.btnConnectCard);
         btnConnectText = findViewById(R.id.btnConnectText);
-        serverSpinner = findViewById(R.id.serverSpinner);
 
-        // ผูก View บนการ์ดเซิร์ฟเวอร์
+        // ผูกการ์ดเลือกเซิร์ฟเวอร์
+        cardServerSelect = findViewById(R.id.cardServer);
         imgServerFlag = findViewById(R.id.imgServerFlag);
         tvServerName = findViewById(R.id.tvServerName);
         tvServerStatus = findViewById(R.id.tvServerStatus);
@@ -53,19 +53,14 @@ public class MainActivity extends AppCompatActivity {
 
         loadServersFromRaw();
 
-        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(this, serverList);
-        serverSpinner.setAdapter(adapter);
+        // เลือกตัวแรกเป็นค่าเริ่มต้น
+        if (!serverList.isEmpty()) {
+            currentServer = serverList.get(0);
+            updateServerCardUI(currentServer);
+        }
 
-        serverSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                currentServer = serverList.get(position);
-                updateServerCardUI(currentServer); // อัปเดตข้อมูลบนการ์ดเมื่อเปลี่ยนรายการ
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
+        // เมื่อกดที่การ์ดเซิร์ฟเวอร์ ให้แสดง Dialog เต็มหน้าจอ
+        cardServerSelect.setOnClickListener(v -> showServerSelectionDialog());
 
         btnConnectCard.setOnClickListener(v -> {
             if (!isConnected) {
@@ -76,8 +71,39 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // ฟังก์ชันสร้างและแสดง Dialog แบบเต็มหน้าจอ
+    private void showServerSelectionDialog() {
+        Dialog dialog = new Dialog(this, R.style.FullScreenDialogTheme);
+        dialog.setContentView(R.layout.dialog_server_select);
+
+        // ตั้งค่าให้ Dialog มีขนาดเต็มหน้าจอ
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT, 
+                ViewGroup.LayoutParams.MATCH_PARENT
+            );
+        }
+
+        ImageView btnClose = dialog.findViewById(R.id.btnCloseDialog);
+        ListView lvServer = dialog.findViewById(R.id.lvServerDialog);
+
+        // ใช้ CustomSpinnerAdapter ตัวเดิมในการแสดงผลรายการใน Dialog
+        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(this, serverList);
+        lvServer.setAdapter(adapter);
+
+        // เมื่อผู้ใช้กดเลือกเซิร์ฟเวอร์ในรายการ
+        lvServer.setOnItemClickListener((parent, view, position, id) -> {
+            currentServer = serverList.get(position);
+            updateServerCardUI(currentServer); // อัปเดต UI หน้าหลัก
+            dialog.dismiss(); // ปิด Dialog
+        });
+
+        btnClose.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+
     private void loadServersFromRaw() {
-        // ดึงรูปภาพธงชาติจาก res/drawable/flag_th.png และ flag_jp.png
         serverList.add(new ServerItem(
                 "Thailand Server", 
                 "Thailand", 
@@ -97,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
         ));
     }
 
-    // เมธอดสำหรับอัปเดตข้อมูลการ์ดเซิร์ฟเวอร์ที่เลือก
     private void updateServerCardUI(ServerItem server) {
         if (server != null) {
             imgServerFlag.setImageResource(server.getFlagResId());
