@@ -41,8 +41,15 @@ public class CustomSpinnerAdapter extends ArrayAdapter<ServerItem> {
         ImageView flag = convertView.findViewById(R.id.spinner_flag);
         TextView name = convertView.findViewById(R.id.spinner_name);
 
-        flag.setImageResource(server.getFlagResId());
-        name.setText(server.getName());
+        if (server != null) {
+            // ตั้งค่ารูปภาพธงชาติ
+            flag.setImageResource(server.getFlagResId());
+            // ปรับขนาดรูปให้อยู่ในสัดส่วนที่ถูกต้องและไม่ยืดเบี้ยว
+            flag.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+            // ตั้งค่าชื่อเซิร์ฟเวอร์
+            name.setText(server.getName());
+        }
 
         return convertView;
     }

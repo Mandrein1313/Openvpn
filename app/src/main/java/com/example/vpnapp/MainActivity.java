@@ -5,6 +5,7 @@ import android.net.VpnService;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,12 @@ public class MainActivity extends AppCompatActivity {
     private MaterialCardView btnConnectCard;
     private Spinner serverSpinner;
 
+    // View บนการ์ดแสดงข้อมูลเซิร์ฟเวอร์
+    private ImageView imgServerFlag;
+    private TextView tvServerName;
+    private TextView tvServerStatus;
+    private TextView tvPercentage;
+
     private boolean isConnected = false;
     private ServerItem currentServer;
     private List<ServerItem> serverList = new ArrayList<>();
@@ -32,10 +39,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // ผูก View ทั่วไป
         tvStatus = findViewById(R.id.tvStatus);
         btnConnectCard = findViewById(R.id.btnConnectCard);
         btnConnectText = findViewById(R.id.btnConnectText);
         serverSpinner = findViewById(R.id.serverSpinner);
+
+        // ผูก View บนการ์ดเซิร์ฟเวอร์
+        imgServerFlag = findViewById(R.id.imgServerFlag);
+        tvServerName = findViewById(R.id.tvServerName);
+        tvServerStatus = findViewById(R.id.tvServerStatus);
+        tvPercentage = findViewById(R.id.tvPercentage);
 
         loadServersFromRaw();
 
@@ -46,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 currentServer = serverList.get(position);
+                updateServerCardUI(currentServer); // อัปเดตข้อมูลบนการ์ดเมื่อเปลี่ยนรายการ
             }
 
             @Override
@@ -62,25 +77,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadServersFromRaw() {
-        // แก้ไขให้ส่งพารามิเตอร์ครบ 6 ตัวตาม Constructor ของ ServerItem
-        // (Name, Country, Status, Percentage, FlagResId, OvpnFileName)
+        // ดึงรูปภาพธงชาติจาก res/drawable/flag_th.png และ flag_jp.png
         serverList.add(new ServerItem(
                 "Thailand Server", 
                 "Thailand", 
-                "ออนไลน์", 
+                "ออนไลน์: 875 / จำกัด: 1200", 
                 73, 
-                R.mipmap.ic_launcher, // เปลี่ยนเป็น R.drawable.ic_flag_th หรือไอคอนที่คุณมีได้
+                R.drawable.flag_th, 
                 "th_vpn"
         ));
 
         serverList.add(new ServerItem(
                 "Japan Server", 
                 "Japan", 
-                "ออนไลน์", 
+                "ออนไลน์: 620 / จำกัด: 1000", 
                 56, 
-                R.mipmap.ic_launcher, // เปลี่ยนเป็น R.drawable.ic_flag_jp หรือไอคอนที่คุณมีได้
+                R.drawable.flag_jp, 
                 "jp_vpn"
         ));
+    }
+
+    // เมธอดสำหรับอัปเดตข้อมูลการ์ดเซิร์ฟเวอร์ที่เลือก
+    private void updateServerCardUI(ServerItem server) {
+        if (server != null) {
+            imgServerFlag.setImageResource(server.getFlagResId());
+            tvServerName.setText(server.getName());
+            tvServerStatus.setText(server.getStatus());
+            tvPercentage.setText(server.getPercentage() + "%");
+        }
     }
 
     private void prepareAndStartVpn() {
